@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+ <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Sample CRUD operation in Spring Boot</title>
+<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"/>
+</head>
+<body>
+<!-- header starts -->
+ <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">My project</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#" th:href="@{/}">Home</a></li>
+          </ul>
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#" th:href="@{/home}">Actions</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+             <li>
+              <a href="/logout" th:href="@{/logout}">Logout</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+<!-- header ends -->
+<br/>
+<br/>
+<div class="container">
+		
+		
+	    <h2>Sample Operation for checking database connectivity</h2>
+	    <div>
+	    <h3>Add Record</h3>
+	      	<!-- Adding Employee Information -->
+					 <form action="#" th:object="${employee}" th:action="@{/employee/add}" method="post">
+						 <table class="table table-bordered">
+						    <tr th:if="${employee.name} != null">
+							   <td> <label for="id" th:text="#{employee.id}">ID : </label>         
+							   </td>
+							   <td>  <input type="text" th:field="*{id}" />
+							   </td>
+							</tr>
+							<tr>
+							  <td>
+							   <label for="name" th:text="#{employee.name}">Name : </label>         
+							  </td>
+							  <td>  <input type="text" th:field="*{name}" />
+							   </td>
+							</tr>
+							<tr>
+							  <td>
+							   <label for="role" th:text="#{employee.role}">Role : </label>         
+							  </td>
+							  <td>  <input type="text" th:field="*{role}" />
+							   </td>
+							</tr>
+							<tr>
+							  <td colspan="2">
+							    <input th:if="${employee.name} != null" type="submit" value="Edit employee" class="btn btn-info"/>
+								<input th:if="${employee.name} == null" type="submit" value="Add employee"  class="btn btn-success"/>
+							  </td>
+							</tr>						 
+						 </table>					 
+					 </form>				
+					
+	    </div>
+	    <div>
+	    <h3>Update/Delete Record</h3>
+		    <div  th:if="${not #lists.isEmpty(listEmployees)}">
+		        <table class="table table-bordered table-striped table-responsive">
+		        <thead>
+		          <tr>
+		            <td>ID</td>
+		            <td>Name</td>
+		            <td>Role</td>
+		            <td>Edit</td>
+		            <td>Delete</td>
+		          </tr>
+		        </thead>
+		        <tbody>		          
+		          <tr th:each="employee : ${listEmployees}" >
+								<td th:text="${employee.id}"/>
+								<td th:text="${employee.name}"/>
+								<td th:text="${employee.role}"/>
+								<td><a th:href="@{/edit/__${employee.id}__}" class="btn btn-info">Edit</a></td>
+								<td><a th:href="@{/remove/__${employee.id}__}" class="btn btn-danger">Delete</a></td>
+				  </tr>
+		        </tbody>
+		      </table>
+		      </div>
+			  <div th:if="${#lists.isEmpty(listEmployees)}">
+			         <table class="table table-bordered table-striped">
+			        <thead>
+			          <tr>
+			            <td>ID</td>
+			            <td>Name</td>
+			            <td>Role</td>
+			            <td>Edit</td>
+			            <td>Delete</td>
+			          </tr>
+			        </thead>
+			        <tbody>
+			          <tr >
+			            <td colspan="5">No Records</td>
+			          </tr>	         
+			        </tbody>
+			      </table>
+			      </div>
+			   </div>
+	    
+	    
+	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+	</div>
+	<br/>
+    <br/>
+<div th:fragment="footer">
+      &copy; 2016 
+</div>
+
+</body>
+</html>

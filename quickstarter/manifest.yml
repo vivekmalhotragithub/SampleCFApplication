@@ -1,0 +1,15 @@
+---
+applications:
+- name: springbinding
+  memory: 512M
+  instances: 1
+  buildpack: java_buildpack
+  host: springbinding
+  domain: cfapps.io
+  path: target/quickstarter.war
+  services:
+    - myservice_1
+    - my_SERVICE_WITH_SYSLOG
+    - redis_Service  
+  env:
+    SPRING_PROFILES_DEFAULT: cloud
